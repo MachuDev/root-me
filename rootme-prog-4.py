@@ -36,13 +36,13 @@ def Listener():
     send_data("USER " + NICKNAME + " " + NICKNAME + " " + NICKNAME + " " + NICKNAME)
     send_data('NICK ' + NICKNAME)
     joinchan(CHANNEL)
-    send_data('PRIVMSG candy !ep3')
+    send_data('PRIVMSG candy !ep4')
     while (1):
         ircmsg = IRC.recv(2048).decode("UTF-8")
         # DEBUG # print(ircmsg)
         data = ircmsg.split(':')[2]
-        decoded = rot13(data)
-        IRC.send(bytes("PRIVMSG candy !ep3 -rep %s" % decoded + '\n', 'UTF-8'))
+        decoded = zlib.decompress(base64.b64decode(data)).decode("UTF-8")
+        IRC.send(bytes("PRIVMSG candy !ep4 -rep %s" % decoded + '\n', 'UTF-8'))
         ircmsg = IRC.recv(2048).decode("UTF-8")
         print('Password: %s' % ircmsg.split('password ')[1])
 
